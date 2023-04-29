@@ -126,7 +126,7 @@ public class BinaryTreeUseHelper {
     }
 
     public static void preOrder(BinaryTreeNode<Integer> root) {
-        if (root == null){
+        if (root == null) {
             return;
         }
         System.out.print(root.data + " ");
@@ -135,7 +135,7 @@ public class BinaryTreeUseHelper {
     }
 
     public static void inOrder(BinaryTreeNode<Integer> root) {
-        if (root == null){
+        if (root == null) {
             return;
         }
         inOrder(root.left);
@@ -144,7 +144,7 @@ public class BinaryTreeUseHelper {
     }
 
     public static void postOrder(BinaryTreeNode<Integer> root) {
-        if (root == null){
+        if (root == null) {
             return;
         }
         postOrder(root.left);
@@ -152,4 +152,32 @@ public class BinaryTreeUseHelper {
         System.out.print(root.data + " ");
     }
 
+    public static BinaryTreeNode<Integer> buildTreePreOrderAndInorder(int[] preOrder, int[] inOrder) {
+        return buildTreePreOrderAndInorder(preOrder, inOrder, 0, preOrder.length - 1, 0, inOrder.length - 1);
+    }
+
+    public static BinaryTreeNode<Integer> buildTreePreOrderAndInorder(int[] preOrder, int[] inOrder, int preOrderSi, int preOrderEi, int inOrderSi, int inOrderEi) {
+        if (preOrderSi > preOrderEi || inOrderSi > inOrderEi) {
+            return null;
+        }
+        int rootData = preOrder[preOrderSi];
+        int indexOfRootDataInInorder = getInorderIndex(inOrder, rootData);
+        int lengthOfLeftSubtree = indexOfRootDataInInorder - inOrderSi;
+        BinaryTreeNode<Integer> node = new BinaryTreeNode<>(rootData);
+        node.left = buildTreePreOrderAndInorder(preOrder, inOrder, preOrderSi + 1, preOrderSi + lengthOfLeftSubtree, inOrderSi, indexOfRootDataInInorder - 1);
+        node.right = buildTreePreOrderAndInorder(preOrder, inOrder, preOrderSi + lengthOfLeftSubtree +1, preOrderEi, indexOfRootDataInInorder + 1, inOrderEi);
+
+        return node;
+
+
+    }
+
+    private static int getInorderIndex(int[] inOrder, int rootData) {
+        for (int i = 0; i < inOrder.length; i++) {
+            if (inOrder[i] == rootData) {
+                return i;
+            }
+        }
+        return -1;
+    }
 }
