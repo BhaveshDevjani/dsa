@@ -57,7 +57,7 @@ public class BinaryTreeUseHelper {
             }
             System.out.println("Enter right child for node: " + node.data);
             int rightData = sc.nextInt();
-            if (leftData != -1) {
+            if (rightData != -1) {
                 BinaryTreeNode<Integer> rightNode = new BinaryTreeNode<>(rightData);
                 node.right = rightNode;
                 pendingQueue.add(rightNode);
@@ -95,6 +95,34 @@ public class BinaryTreeUseHelper {
             return 0;
         }
         return size(root.right) + size(root.left) + 1;
+    }
+
+    public class Pair<T, V> {
+        T diameter;
+        V height;
+
+        @Override
+        public String toString() {
+            return "Pair{" +
+                    "diameter=" + diameter +
+                    ", height=" + height +
+                    '}';
+        }
+    }
+
+    public Pair<Integer, Integer> diameterPair(BinaryTreeNode<Integer> root) {
+        if (root == null) {
+            Pair<Integer, Integer> output = new Pair<>();
+            output.diameter = 0;
+            output.height = 0;
+            return output;
+        }
+        Pair<Integer, Integer> leftAns = diameterPair(root.left);
+        Pair<Integer, Integer> rightAns = diameterPair(root.right);
+        Pair<Integer, Integer> output = new Pair<>();
+        output.height = Math.max(leftAns.height, rightAns.height) +1;
+        output.diameter = Math.max(leftAns.diameter, Math.max(rightAns.diameter, leftAns.height + rightAns.height));
+        return output;
     }
 
 }
