@@ -71,7 +71,7 @@ public class BinaryTreeUseHelper {
         Queue<BinaryTreeNode<Integer>> pendingQueue = new LinkedList<>();
         pendingQueue.add(root);
 
-        while(!pendingQueue.isEmpty()) {
+        while (!pendingQueue.isEmpty()) {
             BinaryTreeNode<Integer> node = pendingQueue.remove();
             String s = node.data + ":";
             if (node.left != null) {
@@ -120,9 +120,36 @@ public class BinaryTreeUseHelper {
         Pair<Integer, Integer> leftAns = diameterPair(root.left);
         Pair<Integer, Integer> rightAns = diameterPair(root.right);
         Pair<Integer, Integer> output = new Pair<>();
-        output.height = Math.max(leftAns.height, rightAns.height) +1;
+        output.height = Math.max(leftAns.height, rightAns.height) + 1;
         output.diameter = Math.max(leftAns.diameter, Math.max(rightAns.diameter, leftAns.height + rightAns.height));
         return output;
+    }
+
+    public static void preOrder(BinaryTreeNode<Integer> root) {
+        if (root == null){
+            return;
+        }
+        System.out.print(root.data + " ");
+        preOrder(root.left);
+        preOrder(root.right);
+    }
+
+    public static void inOrder(BinaryTreeNode<Integer> root) {
+        if (root == null){
+            return;
+        }
+        inOrder(root.left);
+        System.out.print(root.data + " ");
+        inOrder(root.right);
+    }
+
+    public static void postOrder(BinaryTreeNode<Integer> root) {
+        if (root == null){
+            return;
+        }
+        postOrder(root.left);
+        postOrder(root.right);
+        System.out.print(root.data + " ");
     }
 
 }
