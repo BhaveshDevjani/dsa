@@ -180,4 +180,24 @@ public class BinaryTreeUseHelper {
         }
         return -1;
     }
+
+    public static BinaryTreeNode<Integer> buildTreePostOrderAndInorder(int[] postOrder, int[] inOrder) {
+        return buildTreePostOrderAndInorder(postOrder, inOrder, 0, postOrder.length - 1, 0, inOrder.length - 1);
+    }
+
+    public static BinaryTreeNode<Integer> buildTreePostOrderAndInorder(int[] postOrder, int[] inOrder, int postOrderSi, int postOrderEi, int inOrderSi, int inOrderEi) {
+        if (postOrderSi > postOrderEi || inOrderSi > inOrderEi) {
+            return null;
+        }
+        int rootData = postOrder[postOrderEi];
+        int indexOfRootDataInInorder = getInorderIndex(inOrder, rootData);
+        int lengthOfLeftSubtree = indexOfRootDataInInorder - inOrderSi;
+        BinaryTreeNode<Integer> node = new BinaryTreeNode<>(rootData);
+        node.left = buildTreePostOrderAndInorder(postOrder, inOrder, postOrderSi, postOrderSi + lengthOfLeftSubtree -1, inOrderSi, indexOfRootDataInInorder - 1);
+        node.right = buildTreePostOrderAndInorder(postOrder, inOrder, postOrderSi + lengthOfLeftSubtree, postOrderEi -1, indexOfRootDataInInorder + 1, inOrderEi);
+
+        return node;
+
+
+    }
 }
