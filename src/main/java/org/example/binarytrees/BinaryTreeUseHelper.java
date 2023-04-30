@@ -3,6 +3,7 @@ package org.example.binarytrees;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Scanner;
+import java.util.Stack;
 
 public class BinaryTreeUseHelper {
     private static Scanner sc = new Scanner(System.in);
@@ -199,5 +200,46 @@ public class BinaryTreeUseHelper {
         return node;
 
 
+    }
+
+    public static void printZigZag(BinaryTreeNode<Integer> root){
+
+        Queue<BinaryTreeNode<Integer>> pendingQueue = new LinkedList<>();
+        Stack<BinaryTreeNode<Integer>> stack = new Stack<>();
+        boolean isLeftToRight = true;
+        pendingQueue.add(root);
+
+        while (!pendingQueue.isEmpty()) {
+            int levelSize = pendingQueue.size();
+            String s ="";
+            if (isLeftToRight) {
+                for (int i=0; i<levelSize; i++) {
+                    BinaryTreeNode<Integer> node = pendingQueue.remove();
+                    s += node.data + " ";
+                    if (node.left != null) {
+                        pendingQueue.add(node.left);
+                        stack.push(node.left);
+                    }
+                    if (node.right != null) {
+                        pendingQueue.add(node.right);
+                        stack.push(node.right);
+                    }
+                }
+                isLeftToRight = false;
+            } else {
+                while(!stack.isEmpty()) {
+                    s += stack.pop().data + " ";
+                    BinaryTreeNode<Integer> node = pendingQueue.remove();
+                    if (node.left != null) {
+                        pendingQueue.add(node.left);
+                    }
+                    if (node.right != null) {
+                        pendingQueue.add(node.right);
+                    }
+                }
+                isLeftToRight = true;
+            }
+            System.out.println(s);
+        }
     }
 }
