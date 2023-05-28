@@ -50,6 +50,7 @@ public class MinHeap<T extends Comparable<T>> implements PriorityQueue<T> {
 
     @Override
     public T delete() {
+        if (heap.isEmpty()) return null;
         T data = heap.get(0);
         heap.set(0, heap.get(size() - 1));
         heap.remove(size() - 1);
