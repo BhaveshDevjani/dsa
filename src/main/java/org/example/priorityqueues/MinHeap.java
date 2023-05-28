@@ -3,7 +3,7 @@ package org.example.priorityqueues;
 import java.util.ArrayList;
 
 public class MinHeap<T extends Comparable<T>> implements PriorityQueue<T> {
-    ArrayList<T> heap;
+    private ArrayList<T> heap;
 
     public MinHeap() {
         heap = new ArrayList<T>();
